@@ -60,17 +60,25 @@ passport.deserializeUser((id, done) => {
 });
 
 let initRoutes = (app) => {
+    //api
+    router.get("/api/all-clinics", home.getApiPageAllClinics);
+    router.get("/api/all-doctors", home.getApiPageAllDoctors);
+    router.get("/api/all-specializations", home.getApiPageAllSpecializations);
+    router.post('/api/search-homepage', home.postSearchHomePage);
+    router.get('/feedback/:id', home.getFeedbackPage);
+    router.get('/api/feedback/:id', home.getApiFeedbackPage)
+
+    router.post('/api/get-info-doctor-by-id', doctor.getInfoDoctorById);
+    router.post('/api/get-info-clinic-by-id', clinic.getInfoClinicById);
+    router.post('/api/get-detail-patient-by-id', home.getDetailPatientBooking);
+
+    //render
     router.get("/all-clinics", home.getPageAllClinics);
     router.get("/all-doctors", home.getPageAllDoctors);
     router.get("/all-specializations", home.getPageAllSpecializations);
-
     router.get('/users/manage/schedule-for-doctors', auth.checkLoggedIn, admin.getManageCreateScheduleForDoctorsPage);
-    
-
-
     router.get('/feedback/:id', home.getFeedbackPage);
     router.post('/feedback/create', home.postCreateFeedback);
-
     router.get('/for-patients', home.getPageForPatients);
     router.get('/for-doctors', home.getPageForDoctors);
 
