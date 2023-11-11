@@ -64,18 +64,34 @@ let initRoutes = (app) => {
     router.get("/api/all-clinics", home.getApiPageAllClinics);
     router.get("/api/all-doctors", home.getApiPageAllDoctors);
     router.get("/api/all-specializations", home.getApiPageAllSpecializations);
-    router.post('/api/search-homepage', home.postSearchHomePage);
-    router.get('/feedback/:id', home.getFeedbackPage);
-    router.get('/api/feedback/:id', home.getApiFeedbackPage)
+    router.post("/api/search-homepage", home.postSearchHomePage);
+    router.get("/api/feedback/:id", home.getApiFeedbackPage)
 
-    router.post('/api/get-info-doctor-by-id', doctor.getInfoDoctorById);
-    router.post('/api/get-info-clinic-by-id', clinic.getInfoClinicById);
-    router.post('/api/get-detail-patient-by-id', home.getDetailPatientBooking);
+    router.get('/api/users/manage/doctor', auth.checkLoggedIn, admin.getApiManageDoctor);
+    router.get('/api/users/manage/doctor/create', auth.checkLoggedIn, admin.getApiCreateDoctor);
+    router.get('/api/users/manage/clinic', auth.checkLoggedIn, admin.getApiManageClinic);
+    router.post('/api/admin/doctor/create', auth.checkLoggedIn, admin.postCreateDoctor);
+    router.get('/api/users/doctor/edit/:id', auth.checkLoggedIn, admin.getApiEditDoctor);
+    router.put('/api/admin/doctor/update-without-file', auth.checkLoggedIn, admin.putUpdateDoctorWithoutFile);
+    router.put('/api/admin/doctor/update', auth.checkLoggedIn, admin.putUpdateDoctor);
 
+    router.post('/api/admin/clinic/create', auth.checkLoggedIn, admin.postApiCreateClinic);
+    router.post('/api/admin/clinic/create-without-file', auth.checkLoggedIn, admin.postCreateClinicWithoutFile);
+    
+    router.post("/api/get-info-doctor-by-id", doctor.getInfoDoctorById);
+    router.post("/api/get-info-clinic-by-id", clinic.getInfoClinicById);
+    router.post("/api/get-detail-patient-by-id", home.getDetailPatientBooking);
+
+    router.delete('/api/admin/delete/clinic', auth.checkLoggedIn, admin.deleteClinicById);
+    router.delete('/api/admin/delete/doctor', auth.checkLoggedIn, admin.deleteDoctorById);
+    router.delete('/api/admin/delete/specialization', auth.checkLoggedIn, admin.deleteSpecializationById);
+    router.delete('/api/admin/delete/post', auth.checkLoggedIn, admin.deletePostById);
+    
     //render
     router.get("/all-clinics", home.getPageAllClinics);
     router.get("/all-doctors", home.getPageAllDoctors);
     router.get("/all-specializations", home.getPageAllSpecializations);
+    router.get("/feedback/:id", home.getFeedbackPage);
     router.get('/users/manage/schedule-for-doctors', auth.checkLoggedIn, admin.getManageCreateScheduleForDoctorsPage);
     router.get('/feedback/:id', home.getFeedbackPage);
     router.post('/feedback/create', home.postCreateFeedback);
